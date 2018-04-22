@@ -13,7 +13,7 @@
 
 char buffer[BUFFER_SIZE];
 void create_file(unsigned long length);
-void check_file(unsigned long length,const char *file1,const char *file2);
+bool check_file(unsigned long length,const char *file1,const char *file2);
 
 int main()
 {
@@ -33,7 +33,12 @@ int main()
 			extract += " 2 ";
 			extract += ext_file_name;
 			system(extract.c_str());
-			check_file(file_length,tmp_file_name,src_file_name);
+			std::cerr << "file-length: " << file_length << std::endl;
+                        bool ret = check_file(file_length,tmp_file_name,src_file_name);
+                        if(ret == true){
+                                std::cerr << "------------correct---------" << std::endl;
+                        }else
+                                std::cerr << "------------error-----------" << std::endl;
 		}
 	}
 	return 0;
@@ -54,7 +59,7 @@ void create_file(unsigned long length)
 	}
 	close(fd);
 }
-void check_file(unsigned long length,const char *file1,const char *file2)
+bool check_file(unsigned long length,const char *file1,const char *file2)
 {
 
 	struct stat buf1,buf2;
@@ -77,7 +82,7 @@ void check_file(unsigned long length,const char *file1,const char *file2)
 				std::cerr << '\t' << buf1.st_size << '\t' << buf2.st_size << std::endl;
 			        close(fd1);
 			        close(fd2);
-                                return;
+                                return false;
                         }
                 }
         }
@@ -85,8 +90,9 @@ void check_file(unsigned long length,const char *file1,const char *file2)
                 std::cerr << "size diff: "<< length << '\t' << buf1.st_size << '\t' <<buf2.st_size<< std::endl;
  	       	close(fd1);
         	close(fd2);
-                return;
+                return false;
         }
         close(fd1);
         close(fd2);
+	return true;
 }
