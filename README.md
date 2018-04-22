@@ -13,6 +13,6 @@ make
 在test目录下执行
 g++ test.cc
 将main拷贝到test目录下执行
-./a.out > log 2>> err
+./a.out > /dev/null 2>> err
 出错信息会在err文件中
 测试会很慢
