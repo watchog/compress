@@ -17,7 +17,7 @@ void check_file(unsigned long length,const char *file1,const char *file2);
 
 int main()
 {
-	for(int file_length = 1;file_length < MAX_FILE_SIZE;++file_length){
+	for(int file_length = 1;file_length < MAX_FILE_SIZE;file_length+=10){
 		for(int i = 0;i <= 0;++i){
 			std::string compress(BINARY_FILE_NAME);
 			std::string extract(BINARY_FILE_NAME);
